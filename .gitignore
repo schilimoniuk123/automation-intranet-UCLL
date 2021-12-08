@@ -1,0 +1,5 @@
+.idea
+target
+*.iml
+/src/test/chromedriver.exe
+/src/test/resources/credentials.properties
