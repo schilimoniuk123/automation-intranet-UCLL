@@ -20,20 +20,4 @@ import ui.pages.Page;
 )
 
 public class CucumberTests {
-
-    @Before
-    public void setUp() {
-        Page.getDriver();
-    }
-
-    @After
-    public void clean() {
-        Page.quitDriver();
-    }
-
-    @Given("Yannick is logged in")
-    public void yannickIsLoggedIn() {
-        LoginPage loginPage = PageFactory.initElements(Page.getDriver(), LoginPage.class);
-        loginPage.login();
-    }
 }

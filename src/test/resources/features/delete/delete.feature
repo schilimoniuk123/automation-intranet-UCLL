@@ -28,7 +28,7 @@ Feature: delete
 
   Rule: Deleted news items are added to the list of deleted news items
 
-  @Unit
+  @UI
   Scenario: Deleted news items are added to the list of deleted news items
     Given the news item "ISP invullen" is not a deleted news item
     When Yannick deletes the news item "ISP invullen"
