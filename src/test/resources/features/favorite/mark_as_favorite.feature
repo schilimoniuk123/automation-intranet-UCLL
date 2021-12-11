@@ -11,15 +11,15 @@ Feature: Mark as Favorite
     Given Yannick is logged in
 
   Rule: Favorite news items are marked as favorite
-  #@UI
+  @UI
   Scenario: Favorite news items are marked as favorite
-    Given the news item "ISP invullen" is not a favorite news item
-    When Yannick marks the news item "ISP invullen" as favorite
-    Then the news item "ISP invullen" should be marked as a favorite news item
+    Given the news item "stem dinsdag mee op de beste volunteerfest-pitch" is not a favorite news item
+    When Yannick marks the news item "stem dinsdag mee op de beste volunteerfest-pitch" as favorite
+    Then the news item "stem dinsdag mee op de beste volunteerfest-pitch" should be marked as a favorite news item
 
   Rule: Favorite news items are added to the list of favorite news items
-  #@UI
+  @UI
   Scenario: Favorite news items are added to the list of favorite news items
-    Given the news item "ISP invullen" is not a favorite news item
-    When Yannick marks the news item "ISP invullen" as favorite
-    Then the news item "ISP invullen" should be added to the list of favorite news items
+    Given the news item "stem dinsdag mee op de beste volunteerfest-pitch" is not a favorite news item
+    When Yannick marks the news item "stem dinsdag mee op de beste volunteerfest-pitch" as favorite
+    Then the news item "stem dinsdag mee op de beste volunteerfest-pitch" should be added to the list of favorite news items
