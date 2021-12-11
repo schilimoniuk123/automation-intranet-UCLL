@@ -9,9 +9,13 @@ public abstract class Page {
 
     public static void initDriver () {
         System.setProperty("webdriver.chrome.driver", "src/test/chromedriver.exe");
-        //if(driver == null) {
+        if(driver == null) {
             driver = new ChromeDriver();
-        //}
+        }
+        else{
+            quitDriver();
+            initDriver();
+        }
     }
 
     public static void quitDriver() {
