@@ -13,13 +13,13 @@ Feature: Mark as Favorite
   Rule: Favorite news items are marked as favorite
   @UI
   Scenario: Favorite news items are marked as favorite
-    Given the news item "stem dinsdag mee op de beste volunteerfest-pitch" is not a favorite news item
-    When Yannick marks the news item "stem dinsdag mee op de beste volunteerfest-pitch" as favorite
-    Then the news item "stem dinsdag mee op de beste volunteerfest-pitch" should be marked as a favorite news item
+    Given the news item "Schrijfmarathon Amnesty International" is not a favorite news item
+    When Yannick marks the news item "Schrijfmarathon Amnesty International" as favorite
+    Then the news item "Schrijfmarathon Amnesty International" should be marked as a favorite news item
 
   Rule: Favorite news items are added to the list of favorite news items
   @UI
   Scenario: Favorite news items are added to the list of favorite news items
-    Given the news item "stem dinsdag mee op de beste volunteerfest-pitch" is not a favorite news item
-    When Yannick marks the news item "stem dinsdag mee op de beste volunteerfest-pitch" as favorite
-    Then the news item "stem dinsdag mee op de beste volunteerfest-pitch" should be added to the list of favorite news items
+    Given the news item "Schrijfmarathon Amnesty International" is not a favorite news item
+    When Yannick marks the news item "Schrijfmarathon Amnesty International" as favorite
+    Then the news item "Schrijfmarathon Amnesty International" should be added to the list of favorite news items

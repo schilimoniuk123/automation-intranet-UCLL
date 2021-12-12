@@ -1,8 +1,9 @@
 package ui.steps;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.After;
+import io.cucumber.java.After;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -27,21 +28,16 @@ public class DeleteNewsItem {
     @FindBy(linkText = "Mijn nieuws")
     private WebElement link;
 
-    public DeleteNewsItem() {
+
+    @Before
+    public void setUp() {
         Page.initDriver();
     }
 
-    @Given("Yannick is logged in")
-    public void yannick_is_logged_in(){
-        LoginPage loginPage = PageFactory.initElements(Page.getDriver(), LoginPage.class);
-        loginPage.login();
-    }
 
     @Given("the news item {string} is not a deleted news item")
     public void the_news_item_is_not_a_deleted_news_item(String string){
         try{
-
-            TimeUnit.SECONDS.sleep(2);
             System.out.println("expected element: " + string);
             System.out.println("found element: " + Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0).getText());
 
@@ -80,7 +76,6 @@ public class DeleteNewsItem {
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
             assertEquals(link.getText(), "Mark as undeleted");
-
             unDeleteItem(string);
 
         }catch(Exception e){
@@ -92,11 +87,9 @@ public class DeleteNewsItem {
     public void the_news_item_should_be_removed_from_the_overview_of_all_news_items(String string) throws InterruptedException {
         try{
             clickItem(XPATH_ALL);
-
             link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as deleted') or contains(@title, 'Mark as undeleted')]")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
-
         }catch (IndexOutOfBoundsException oob)
         {
             unDeleteItem(string);
@@ -132,6 +125,12 @@ public class DeleteNewsItem {
         Page.quitDriver();
     }
 
+
+
+
+    //====================================================================================================
+
+
     //alleen voor de links zoals "Alle", "Belangrijk", "Favoriet", etc...
     public void clickItem(String xpath) throws InterruptedException {
         WebElement element = Page.getDriver().findElements(By.xpath(xpath)).get(0);
@@ -139,7 +138,6 @@ public class DeleteNewsItem {
         wait1.until(ExpectedConditions.visibilityOf(element));
         JavascriptExecutor executor = (JavascriptExecutor) Page.getDriver();
         executor.executeScript("arguments[0].click();", element);
-
         //wacht totdat de inhoud van de verwijderde items ingeladen zijn.
         TimeUnit.SECONDS.sleep(2);
     }

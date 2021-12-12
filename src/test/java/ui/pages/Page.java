@@ -12,10 +12,6 @@ public abstract class Page {
         if(driver == null) {
             driver = new ChromeDriver();
         }
-        else{
-            quitDriver();
-            initDriver();
-        }
     }
 
     public static void quitDriver() {
