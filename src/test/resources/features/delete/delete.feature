@@ -12,7 +12,7 @@ Feature: delete
 
   Rule: Deleted news items are marked as deleted news items
 
-  @UI
+  #@UI
   Scenario: Deleted news items are marked as deleted news items
     Given the news item "Verstuur je kerst- en nieuwjaarswensen" is not a deleted news item
     When Yannick deletes the news item "Verstuur je kerst- en nieuwjaarswensen"
@@ -20,7 +20,7 @@ Feature: delete
 
   Rule: Deleted news items are removed from the overview of all news items
 
-  @UI
+  #@UI
   Scenario: Deleted news items are removed from the overview of all news items
     Given the news item "Verstuur je kerst- en nieuwjaarswensen" is not a deleted news item
     When Yannick deletes the news item "Verstuur je kerst- en nieuwjaarswensen"
@@ -28,7 +28,7 @@ Feature: delete
 
   Rule: Deleted news items are added to the list of deleted news items
 
-  @UI
+  #@UI
   Scenario: Deleted news items are added to the list of deleted news items
     Given the news item "Verstuur je kerst- en nieuwjaarswensen" is not a deleted news item
     When Yannick deletes the news item "Verstuur je kerst- en nieuwjaarswensen"
