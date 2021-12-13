@@ -33,33 +33,14 @@ public class SearchNewsItemSteps {
     @Given("the news item {string} is on the news feed")
     public void the_news_item_is_on_the_news_feed(String string) {
 
-        try{
-
-            clickItem(XPATH_ALL);
-            System.out.println("expected element: " + string);
-            System.out.println("found element: " + Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0).getText());
-            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]")).get(0);
-
-            WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
-            wait.until(ExpectedConditions.visibilityOf(link));
-
-        } catch (NullPointerException e)
-        {
-
-            throw new NullPointerException("News item bestaat niet of is verwijderd");
-
-        } catch (Exception ex){
-
-            ex.getMessage();
-
-        }
+        
 
     }
 
     @When("Yannick searches the news item {string}")
     public void yannick_searches_the_news_item(String string) {
 
-        link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Search in news'))]")).get(0);
+        link = Page.getDriver().findElements(By.xpath("/html/body/div[2]/div[2]/div/div/div/div/div/div/div[2]/div/div[3]/div/div/div[1]/div[1]/a[1]")).get(0);
 
         WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(link));
