@@ -49,8 +49,8 @@ public class SearchNewsItemSteps {
 
     }
 
-    @When("Yannick searches {string} to search the news item {string}")
-    public void yannick_searches_to_search_the_news_item(String string, String string2) {
+    @When("Yannick searches {string} to search for the news item {string}")
+    public void yannick_searches_to_search_for_the_news_item(String string, String string2) {
 
 
 

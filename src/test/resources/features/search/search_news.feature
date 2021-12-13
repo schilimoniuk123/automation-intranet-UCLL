@@ -23,5 +23,5 @@ Feature: search news item
     @UI
     Scenario: Search a news item based on keywords
       Given the news item "Verstuur je kerst- en nieuwjaarswensen" is on the news feed
-      When Yannick searches "Verstuur je" to search the news item "Verstuur je kerst- en nieuwjaarswensen"
+      When Yannick searches "Verstuur je" to search for the news item "Verstuur je kerst- en nieuwjaarswensen"
       Then the news item "Verstuur je kerst- en nieuwjaarswensen" should be found
