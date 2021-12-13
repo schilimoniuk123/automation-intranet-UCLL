@@ -22,9 +22,9 @@ Feature: recover deleted
 
     @UI
     Scenario: Undeleted news items are removed from the list of deleted news items
-      Given the news item "Onthaal campus Proximus uitzonderlijk gesloten om 17 uur op maandag 13 december" is a deleted news item
-      When Yannick undeletes the news item "Onthaal campus Proximus uitzonderlijk gesloten om 17 uur op maandag 13 december"
-      Then the news item "Onthaal campus Proximus uitzonderlijk gesloten om 17 uur op maandag 13 december" should be removed from the list of deleted news items
+      Given the news item "14 december WEBINAR Pitch Please: starten als student ondernemer!" is a deleted news item
+      When Yannick undeletes the news item "14 december WEBINAR Pitch Please: starten als student ondernemer!"
+      Then the news item "14 december WEBINAR Pitch Please: starten als student ondernemer!" should be removed from the list of deleted news items
 
   Rule: Undeleted news items are marked as undeleted news items
 

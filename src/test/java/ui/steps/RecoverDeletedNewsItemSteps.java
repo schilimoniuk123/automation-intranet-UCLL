@@ -32,14 +32,14 @@ public class RecoverDeletedNewsItemSteps {
     }
 
     @Given("the news item {string} is a deleted news item")
-    public void the_news_item_is_a_deleted_news_item(String string) throws Exception {
+    public void the_news_item_is_a_deleted_news_item(String newsItem) throws Exception {
         try{
             clickItem(XPATH_DELETED);
-            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0);
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
 
-            assertEquals(string.toLowerCase(), link.getText().toLowerCase());
+            assertEquals(newsItem.toLowerCase(), link.getText().toLowerCase());
         }catch(IndexOutOfBoundsException ioobe)
         {
             ioobe.getMessage();
@@ -51,8 +51,8 @@ public class RecoverDeletedNewsItemSteps {
     }
 
     @When("Yannick undeletes the news item {string}")
-    public void yannick_undeletes_the_news_item(String string) {
-        link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as undeleted')]")).get(0);
+    public void yannick_undeletes_the_news_item(String newsItem) {
+        link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']/../..//a[contains(@title,'Mark as undeleted')]")).get(0);
         WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(link));
 
@@ -61,15 +61,15 @@ public class RecoverDeletedNewsItemSteps {
     }
 
     @Then("the news item {string} should be on the news feed again")
-    public void the_news_item_should_be_on_the_news_feed_again(String string) {
+    public void the_news_item_should_be_on_the_news_feed_again(String newsItem) {
         try{
             clickItem(XPATH_ALL);
             link = null;
-            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0);
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
 
-            assertEquals(string.toLowerCase(), link.getText().toLowerCase());
+            assertEquals(newsItem.toLowerCase(), link.getText().toLowerCase());
         }catch (Exception e)
         {
             e.printStackTrace();
@@ -78,11 +78,11 @@ public class RecoverDeletedNewsItemSteps {
     }
 
     @Then("the news item {string} should be removed from the list of deleted news items")
-    public void the_news_item_should_be_removed_from_the_list_of_deleted_news_items(String string) {
+    public void the_news_item_should_be_removed_from_the_list_of_deleted_news_items(String newsItem) {
         try {
             clickItem(XPATH_DELETED);
             link = null;
-            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0);
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
         }catch(IndexOutOfBoundsException ioob)
@@ -95,11 +95,11 @@ public class RecoverDeletedNewsItemSteps {
     }
 
     @Then("the news item {string} should be marked as undeleted")
-    public void the_news_item_should_be_marked_as_undeleted(String string) throws Exception {
+    public void the_news_item_should_be_marked_as_undeleted(String newsItem) throws Exception {
         try {
             clickItem(XPATH_ALL);
             link = null;
-            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as deleted')]")).get(0);
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']/../..//a[contains(@title,'Mark as deleted')]")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
 
@@ -118,6 +118,12 @@ public class RecoverDeletedNewsItemSteps {
     public void clean() {
         Page.quitDriver();
     }
+
+
+
+    //====================================================================================================
+
+
 
     public void clickItem(String xpath) throws InterruptedException {
         WebElement element = Page.getDriver().findElements(By.xpath(xpath)).get(0);

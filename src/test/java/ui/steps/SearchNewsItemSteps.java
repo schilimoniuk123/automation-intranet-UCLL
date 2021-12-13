@@ -31,8 +31,6 @@ public class SearchNewsItemSteps {
     private final static String XPATH_SEARCHBAR = "/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div/div[1]/div/form/div/div/div/div[1]/div/div/input";
     private final static String XPATH_SEARCHBTN = "/html/body/div[2]/div[2]/div/div/div/div/div/div/div/div/div[1]/div/form/div/div/div/div[3]/button";
 
-    private String searchtext;
-
     @FindBy(linkText = "Mijn nieuws")
     private WebElement link;
 
@@ -42,15 +40,15 @@ public class SearchNewsItemSteps {
     }
 
     @Given("the news item {string} is on the news feed")
-    public void the_news_item_is_on_the_news_feed(String string) {
+    public void the_news_item_is_on_the_news_feed(String newsItem) {
         try{
             clickItem(XPATH_ALL);
             link = null;
-            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0);
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
 
-            assertEquals(string.toLowerCase(), link.getText().toLowerCase());
+            assertEquals(newsItem.toLowerCase(), link.getText().toLowerCase());
         }catch(IndexOutOfBoundsException ioobe)
         {
             ioobe.getMessage();
@@ -63,11 +61,11 @@ public class SearchNewsItemSteps {
     }
 
     @When("Yannick searches the news item {string}")
-    public void yannick_searches_the_news_item(String string) throws Exception {
+    public void yannick_searches_the_news_item(String newsItem) throws Exception {
         try{
             clickItem(XPATH_SEARCH);
             link = Page.getDriver().findElements(By.xpath(XPATH_SEARCHBAR)).get(0);
-            link.sendKeys(string);
+            link.sendKeys(newsItem);
             clickItem(XPATH_SEARCHBTN);
         }catch (IndexOutOfBoundsException ioobe)
         {
@@ -80,11 +78,11 @@ public class SearchNewsItemSteps {
     }
 
     @When("Yannick searches {string} to search for the news item {string}")
-    public void yannick_searches_to_search_for_the_news_item(String string, String string2) throws Exception {
+    public void yannick_searches_to_search_for_the_news_item(String newsItem, String newsItem2) throws Exception {
         try{
             clickItem(XPATH_SEARCH);
             link = Page.getDriver().findElements(By.xpath(XPATH_SEARCHBAR)).get(0);
-            link.sendKeys(string);
+            link.sendKeys(newsItem);
             clickItem(XPATH_SEARCHBTN);
         }catch (IndexOutOfBoundsException ioobe)
         {
@@ -97,18 +95,25 @@ public class SearchNewsItemSteps {
     }
 
     @Then("the news item {string} should be found")
-    public void the_news_item_should_be_found(String string) {
-        link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2//a[text()='" + string +"']")).get(0);
+    public void the_news_item_should_be_found(String newsItem) {
+        link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2//a[text()='" + newsItem +"']")).get(0);
         WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(link));
 
-        assertTrue(link.getText().toLowerCase().contains(string.toLowerCase()));
+        assertTrue(link.getText().toLowerCase().contains(newsItem.toLowerCase()));
 
     }
     @After
     public void clean() {
         Page.quitDriver();
     }
+
+
+
+    //====================================================================================================
+
+
+
 
     public void clickItem(String xpath) throws InterruptedException {
         WebElement element = Page.getDriver().findElements(By.xpath(xpath)).get(0);

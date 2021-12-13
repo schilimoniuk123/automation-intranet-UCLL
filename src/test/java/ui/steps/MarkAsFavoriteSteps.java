@@ -43,13 +43,13 @@ public class MarkAsFavoriteSteps {
 
 
     @Given("the news item {string} is not a favorite news item")
-    public void the_news_item_is_not_a_favorite_news_item(String string) {
+    public void the_news_item_is_not_a_favorite_news_item(String newsItem) {
         try{
 
             clickItem(XPATH_ALL);
-            System.out.println("expected element: " + string);
-            System.out.println("found element: " + Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0).getText());
-            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]")).get(0);
+            System.out.println("expected element: " + newsItem);
+            System.out.println("found element: " + Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']")).get(0).getText());
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]")).get(0);
 
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
@@ -64,8 +64,8 @@ public class MarkAsFavoriteSteps {
 
 
     @When("Yannick marks the news item {string} as favorite")
-    public void yannick_marks_the_news_item_as_favorite(String string) {
-        link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]")).get(0);
+    public void yannick_marks_the_news_item_as_favorite(String newsItem) {
+        link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]")).get(0);
 
         WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(link));
@@ -76,13 +76,13 @@ public class MarkAsFavoriteSteps {
 
 
     @Then("the news item {string} should be marked as a favorite news item")
-    public void the_news_item_should_be_marked_as_a_favorite_news_item(String string) throws InterruptedException {
+    public void the_news_item_should_be_marked_as_a_favorite_news_item(String newsItem) throws InterruptedException {
         try{
-            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]")).get(0);
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
             assertEquals(link.getText(), "Mark as unfavorite");
-            unFavorite(string);
+            unFavorite(newsItem);
 
         }
         catch(Exception e){
@@ -91,15 +91,15 @@ public class MarkAsFavoriteSteps {
     }
 
     @Then("the news item {string} should be added to the list of favorite news items")
-    public void the_news_item_should_be_added_to_the_list_of_favorite_news_items(String string) {
+    public void the_news_item_should_be_added_to_the_list_of_favorite_news_items(String newsItem) {
         try{
             clickItem(XPATH_FAVORITE);
-            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]")).get(0);
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
             assertEquals(link.getText(), "Mark as unfavorite");
             assertNotNull(link);
-            unFavorite(string);
+            unFavorite(newsItem);
         }
         catch(Exception e){
             e.getMessage();
@@ -129,10 +129,10 @@ public class MarkAsFavoriteSteps {
         TimeUnit.SECONDS.sleep(2);
     }
 
-    public void unFavorite(String string) throws InterruptedException {
+    public void unFavorite(String newsItem) throws InterruptedException {
         clickItem(XPATH_FAVORITE);
-        clickItem("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]");
-        System.out.println("safely unfavorited element: " + string);
+        clickItem("//ancestor::div[@class='view-content']//h2[text()='" + newsItem +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]");
+        System.out.println("safely unfavorited element: " + newsItem);
     }
 
 }
