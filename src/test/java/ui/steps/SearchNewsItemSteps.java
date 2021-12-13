@@ -11,10 +11,16 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ui.pages.LoginPage;
 import ui.pages.Page;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.time.Duration;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertEquals;
 
 public class SearchNewsItemSteps {
 
@@ -22,8 +28,19 @@ public class SearchNewsItemSteps {
     private final static String XPATH_DELETED = "/html/body/div[2]/div[2]/div/div/div/div/div/div/div[2]/div/div[3]/div/div/div[1]/div[3]/ul[2]/li[4]/a";
     private final static String XPATH_SEARCH = "/html/body/div[2]/div[2]/div/div/div/div/div/div/div[2]/div/div[3]/div/div/div[1]/div[1]/a[1]";
 
+    private String searchtext;
+
     @FindBy(linkText = "Mijn nieuws")
     private WebElement link;
+
+    @FindBy(id="edit-search-api-views-fulltext")
+    private WebElement searchbar;
+
+    @FindBy(id="edit-search-api-views-fulltext")
+    private WebElement search;
+
+    @FindBy(id="edit-submit-search")
+    private WebElement searchbutton;
 
     @Before
     public void setUp() {
@@ -52,12 +69,22 @@ public class SearchNewsItemSteps {
     @When("Yannick searches {string} to search for the news item {string}")
     public void yannick_searches_to_search_for_the_news_item(String string, String string2) {
 
+        link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Search in news')]")).get(0);
 
+        WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(link));
+        JavascriptExecutor executor = (JavascriptExecutor) Page.getDriver();
+        executor.executeScript("arguments[0].click();", link);
+
+        SearchNewsItemSteps.SearchBar();
 
     }
 
     @Then("the news item {string} should be found")
     public void the_news_item_should_be_found(String string) {
+
+
+
     }
 
     @After
@@ -81,4 +108,12 @@ public class SearchNewsItemSteps {
         clickItem("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]");
         System.out.println("safely unfavorited element: " + string);
     }*/
+
+    public void SearchBar() {
+        search.clear();
+        search.sendKeys(searchtext);
+        searchbutton.click();
+        WebDriverWait wait = new WebDriverWait(Page.getDriver(), 10);
+        wait.until(ExpectedConditions.visibilityOf(searchbar));
+    }
 }
