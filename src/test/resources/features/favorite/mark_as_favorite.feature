@@ -11,14 +11,14 @@ Feature: Mark as Favorite
     Given Yannick is logged in
 
   Rule: Favorite news items are marked as favorite
-  #@UI
+  @UI
   Scenario: Favorite news items are marked as favorite
     Given the news item "Schrijfmarathon Amnesty International" is not a favorite news item
     When Yannick marks the news item "Schrijfmarathon Amnesty International" as favorite
     Then the news item "Schrijfmarathon Amnesty International" should be marked as a favorite news item
 
   Rule: Favorite news items are added to the list of favorite news items
-  #@UI
+  @UI
   Scenario: Favorite news items are added to the list of favorite news items
     Given the news item "Schrijfmarathon Amnesty International" is not a favorite news item
     When Yannick marks the news item "Schrijfmarathon Amnesty International" as favorite

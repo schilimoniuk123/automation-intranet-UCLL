@@ -31,56 +31,87 @@ public class RecoverDeletedNewsItemSteps {
         Page.initDriver();
     }
 
-    @Given("The news item {string} is a deleted news item")
-    public void the_news_item_is_a_deleted_news_item(String string) {
-
+    @Given("the news item {string} is a deleted news item")
+    public void the_news_item_is_a_deleted_news_item(String string) throws Exception {
         try{
-
-            System.out.println("expected element: " + string);
-            System.out.println("found element: " + Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0).getText());
-
-            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as deleted')]")).get(0);
-
+            clickItem(XPATH_DELETED);
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
 
-        } catch (NullPointerException e)
+            assertEquals(string.toLowerCase(), link.getText().toLowerCase());
+        }catch(IndexOutOfBoundsException ioobe)
         {
-
-            throw new NullPointerException("News item bestaat niet of is verwijderd");
-
-        } catch (Exception ex){
-
-            ex.getMessage();
-
+            ioobe.getMessage();
+            throw new Exception("News item bestaat niet of is niet verwijderd");
+        }catch(Exception e)
+        {
+            e.printStackTrace();
         }
     }
 
     @When("Yannick undeletes the news item {string}")
     public void yannick_undeletes_the_news_item(String string) {
+        link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as undeleted')]")).get(0);
+        WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(link));
 
-
-
+        JavascriptExecutor executor = (JavascriptExecutor) Page.getDriver();
+        executor.executeScript("arguments[0].click();", link);
     }
 
     @Then("the news item {string} should be on the news feed again")
     public void the_news_item_should_be_on_the_news_feed_again(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        try{
+            clickItem(XPATH_ALL);
+            link = null;
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0);
+            WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(link));
+
+            assertEquals(string.toLowerCase(), link.getText().toLowerCase());
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
     }
 
     @Then("the news item {string} should be removed from the list of deleted news items")
     public void the_news_item_should_be_removed_from_the_list_of_deleted_news_items(String string) {
-
-
-
+        try {
+            clickItem(XPATH_DELETED);
+            link = null;
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0);
+            WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(link));
+        }catch(IndexOutOfBoundsException ioob)
+        {
+            assertEquals(null, link);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Then("the news item {string} should be marked as undeleted")
-    public void the_news_item_should_be_marked_as_undeleted(String string) {
+    public void the_news_item_should_be_marked_as_undeleted(String string) throws Exception {
+        try {
+            clickItem(XPATH_ALL);
+            link = null;
+            link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as deleted')]")).get(0);
+            WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.visibilityOf(link));
 
-
-
+            assertEquals("Mark as deleted", link.getText());
+        } catch (IndexOutOfBoundsException ioob)
+        {
+            ioob.getMessage();
+            throw new Exception("News item bestaat niet of is niet verwijderd");
+        }catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @After
@@ -99,9 +130,4 @@ public class RecoverDeletedNewsItemSteps {
         TimeUnit.SECONDS.sleep(2);
     }
 
-/*    public void unFavorite(String string) throws InterruptedException {
-        clickItem(XPATH_DELETED);
-        clickItem("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as favorite') or contains(@title, 'Mark as unfavorite')]");
-        System.out.println("safely unfavorited element: " + string);
-    }*/
 }

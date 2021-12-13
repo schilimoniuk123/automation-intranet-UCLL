@@ -36,19 +36,18 @@ public class DeleteNewsItemSteps {
 
 
     @Given("the news item {string} is not a deleted news item")
-    public void the_news_item_is_not_a_deleted_news_item(String string){
+    public void the_news_item_is_not_a_deleted_news_item(String string) throws Exception {
         try{
             System.out.println("expected element: " + string);
             System.out.println("found element: " + Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0).getText());
 
             link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as deleted')]")).get(0);
-
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
 
         } catch (NullPointerException e)
         {
-            throw new NullPointerException("News item bestaat niet of is verwijderd");
+            throw new Exception("News item bestaat niet of is verwijderd");
         } catch (Exception ex){
             ex.getMessage();
         }
@@ -71,13 +70,10 @@ public class DeleteNewsItemSteps {
     public void the_news_item_should_be_marked_as_deleted(String string) {
         try{
             clickItem(XPATH_DELETED);
-
             link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as deleted') or contains(@title, 'Mark as undeleted')]")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
             assertEquals(link.getText(), "Mark as undeleted");
-            unDeleteItem(string);
-
         }catch(Exception e){
             e.getMessage();
         }
@@ -87,18 +83,16 @@ public class DeleteNewsItemSteps {
     public void the_news_item_should_be_removed_from_the_overview_of_all_news_items(String string) throws InterruptedException {
         try{
             clickItem(XPATH_ALL);
+            link = null;
             link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as deleted') or contains(@title, 'Mark as undeleted')]")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
         }catch (IndexOutOfBoundsException oob)
         {
-            unDeleteItem(string);
-            assertTrue(true);
+            assertEquals(null, link);
         }
         catch(Exception e){
             e.printStackTrace();
-        }finally {
-
         }
     }
 
@@ -109,11 +103,9 @@ public class DeleteNewsItemSteps {
             link = Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as deleted') or contains(@title, 'Mark as undeleted')]")).get(0);
             WebDriverWait wait = new WebDriverWait(Page.getDriver(),Duration.ofSeconds(10));
             wait.until(ExpectedConditions.visibilityOf(link));
-
             assertEquals(Page.getDriver().findElements(By.xpath("//ancestor::div[@class='view-content']//h2[text()='" + string +"']")).get(0).getText().toLowerCase(), string.toLowerCase());
             assertEquals(link.getText(), "Mark as undeleted");
 
-            unDeleteItem(string);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -126,11 +118,6 @@ public class DeleteNewsItemSteps {
     }
 
 
-
-
-    //====================================================================================================
-
-
     //alleen voor de links zoals "Alle", "Belangrijk", "Favoriet", etc...
     public void clickItem(String xpath) throws InterruptedException {
         WebElement element = Page.getDriver().findElements(By.xpath(xpath)).get(0);
@@ -141,11 +128,4 @@ public class DeleteNewsItemSteps {
         //wacht totdat de inhoud van de verwijderde items ingeladen zijn.
         TimeUnit.SECONDS.sleep(2);
     }
-
-    public void unDeleteItem(String string) throws InterruptedException {
-        clickItem(XPATH_DELETED);
-        clickItem("//ancestor::div[@class='view-content']//h2[text()='" + string +"']/../..//a[contains(@title,'Mark as deleted') or contains(@title, 'Mark as undeleted')]");
-        System.out.println("safely undeleted element: " + string);
-    }
-
 }
