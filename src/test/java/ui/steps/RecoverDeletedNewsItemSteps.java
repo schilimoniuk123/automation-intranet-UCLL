@@ -63,11 +63,10 @@ public class RecoverDeletedNewsItemSteps {
 
     }
 
-    @Then("the news item {string} is now on the news feed again")
-    public void the_news_item_is_now_on_the_news_feed_again(String string) {
-
-
-
+    @Then("the news item {string} should be on the news feed again")
+    public void the_news_item_should_be_on_the_news_feed_again(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
     }
 
     @Then("the news item {string} should be removed from the list of deleted news items")

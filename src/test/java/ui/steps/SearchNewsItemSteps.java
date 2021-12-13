@@ -56,11 +56,8 @@ public class SearchNewsItemSteps {
 
     }
 
-    @Then("the news item {string} is found")
-    public void the_news_item_is_found(String string) {
-
-
-
+    @Then("the news item {string} should be found")
+    public void the_news_item_should_be_found(String string) {
     }
 
     @After

@@ -22,9 +22,9 @@ Feature: delete
 
   #@UI
   Scenario: Deleted news items are removed from the overview of all news items
-    Given the news item "Verstuur je kerst- en nieuwjaarswensen" is not a deleted news item
-    When Yannick deletes the news item "Verstuur je kerst- en nieuwjaarswensen"
-    Then the news item "Verstuur je kerst- en nieuwjaarswensen" should be removed from the overview of all news items
+    Given the news item "Onthaal campus Proximus uitzonderlijk gesloten om 17 uur op maandag 13 december" is not a deleted news item
+    When Yannick deletes the news item "Onthaal campus Proximus uitzonderlijk gesloten om 17 uur op maandag 13 december"
+    Then the news item "Onthaal campus Proximus uitzonderlijk gesloten om 17 uur op maandag 13 december" should be removed from the overview of all news items
 
   Rule: Deleted news items are added to the list of deleted news items
 
