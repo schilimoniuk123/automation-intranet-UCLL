@@ -20,7 +20,7 @@ import java.time.Duration;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
-public class DeleteNewsItem {
+public class DeleteNewsItemSteps {
 
     private final static String XPATH_ALL = "/html/body/div[2]/div[2]/div/div/div/div/div/div/div[2]/div/div[3]/div/div/div[1]/div[3]/ul[2]/li[1]/a";
     private final static String XPATH_DELETED = "/html/body/div[2]/div[2]/div/div/div/div/div/div/div[2]/div/div[3]/div/div/div[1]/div[3]/ul[2]/li[4]/a";
